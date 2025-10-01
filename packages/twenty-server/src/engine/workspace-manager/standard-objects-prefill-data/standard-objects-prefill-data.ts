@@ -3,6 +3,7 @@ import { type DataSource, type EntityManager } from 'typeorm';
 import { type ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { shouldSeedWorkspaceFavorite } from 'src/engine/utils/should-seed-workspace-favorite';
 import { prefillCompanies } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-companies';
+import { prefillNewLeads } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-new-leads';
 import { prefillPeople } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-people';
 import { prefillViews } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-views';
 import { prefillWorkflows } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-workflows';
@@ -18,6 +19,8 @@ export const standardObjectsPrefillData = async (
     await prefillCompanies(entityManager, schemaName);
 
     await prefillPeople(entityManager, schemaName);
+
+    await prefillNewLeads(entityManager, schemaName);
 
     await prefillWorkflows(entityManager, schemaName, objectMetadataItems);
 

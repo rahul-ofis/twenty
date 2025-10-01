@@ -597,3 +597,14 @@ export const STANDARD_OBJECT_FIELD_IDS = {
   workflowVersion: WORKFLOW_VERSION_STANDARD_FIELD_IDS,
   workspaceMember: WORKSPACE_MEMBER_STANDARD_FIELD_IDS,
 } as const;
+
+export const NEW_LEAD_STANDARD_FIELD_IDS = {
+  name: '20202020-7240-4ba5-a8e9-a4f3d3a6a99f',
+  phoneNumber: '20202020-7240-4ba5-a8e9-a4f3d3a6a910',
+  email: '20202020-7240-4ba5-a8e9-a4f3d3a6a911',
+  country: '20202020-7240-4ba5-a8e9-a4f3d3a6a912',
+  companyName: '20202020-7240-4ba5-a8e9-a4f3d3a6a913',
+  website: '20202020-7240-4ba5-a8e9-a4f3d3a6a914',
+  position: '20202020-7240-4ba5-a8e9-a4f3d3a6a915',
+  createdBy: '20202020-7240-4ba5-a8e9-a4f3d3a6a916',
+};
