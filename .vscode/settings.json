@@ -6,7 +6,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "source.addMissingImports": "always",
-      "source.organizeImports": "always"
+      // "source.organizeImports": "always"
     }
   },
   "[javascript]": {
@@ -14,7 +14,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "source.addMissingImports": "always",
-      "source.organizeImports": "always"
+      // "source.organizeImports": "always"
     }
   },
   "[typescriptreact]": {
@@ -22,7 +22,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "source.addMissingImports": "always",
-      "source.organizeImports": "always"
+      // "source.organizeImports": "always"
     }
   },
   "[json]": {
