@@ -5,6 +5,7 @@ import { ActorMetadata } from 'src/engine/metadata-modules/field-metadata/compos
 import { BaseWorkspaceEntity } from 'src/engine/twenty-orm/base.workspace-entity';
 import { WorkspaceEntity } from 'src/engine/twenty-orm/decorators/workspace-entity.decorator';
 import { WorkspaceField } from 'src/engine/twenty-orm/decorators/workspace-field.decorator';
+import { WorkspaceFieldIndex } from 'src/engine/twenty-orm/decorators/workspace-field-index.decorator';
 import { WorkspaceIsFieldUIReadOnly } from 'src/engine/twenty-orm/decorators/workspace-is-field-ui-readonly.decorator';
 import { WorkspaceIsNotAuditLogged } from 'src/engine/twenty-orm/decorators/workspace-is-not-audit-logged.decorator';
 import { WorkspaceIsNullable } from 'src/engine/twenty-orm/decorators/workspace-is-nullable.decorator';
@@ -77,6 +78,37 @@ export class NewLeadWorkspaceEntity extends BaseWorkspaceEntity {
     icon: 'IconLink',
   })
   website: string;
+
+  @WorkspaceField({
+    standardId: NEW_LEAD_STANDARD_FIELD_IDS.stage,
+    type: FieldMetadataType.SELECT,
+    label: msg`Stage`,
+    description: msg`Lead stage`,
+    icon: 'IconProgressCheck',
+    options: [
+      {
+        value: 'WAITING_FOR_APPROVAL',
+        label: 'Waiting for approval',
+        position: 0,
+        color: 'yellow',
+      },
+      {
+        value: 'APPROVED',
+        label: 'Approved',
+        position: 1,
+        color: 'green',
+      },
+      {
+        value: 'UNAPPROVED',
+        label: 'Unapproved',
+        position: 2,
+        color: 'red',
+      },
+    ],
+    defaultValue: "'WAITING_FOR_APPROVAL'",
+  })
+  @WorkspaceFieldIndex()
+  stage: string;
 
   @WorkspaceField({
     standardId: NEW_LEAD_STANDARD_FIELD_IDS.createdBy,

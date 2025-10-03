@@ -605,6 +605,7 @@ export const NEW_LEAD_STANDARD_FIELD_IDS = {
   country: '20202020-7240-4ba5-a8e9-a4f3d3a6a912',
   companyName: '20202020-7240-4ba5-a8e9-a4f3d3a6a913',
   website: '20202020-7240-4ba5-a8e9-a4f3d3a6a914',
+  stage: '20202020-7240-4ba5-a8e9-a4f3d3a6a917',
   position: '20202020-7240-4ba5-a8e9-a4f3d3a6a915',
   createdBy: '20202020-7240-4ba5-a8e9-a4f3d3a6a916',
 };
