@@ -22,10 +22,12 @@ import { STANDARD_OBJECT_IDS } from 'src/engine/workspace-manager/workspace-sync
 import { CompanyWorkspaceEntity } from 'src/modules/company/standard-objects/company.workspace-entity';
 import { DashboardWorkspaceEntity } from 'src/modules/dashboard/standard-objects/dashboard.workspace-entity';
 import { FavoriteFolderWorkspaceEntity } from 'src/modules/favorite-folder/standard-objects/favorite-folder.workspace-entity';
+import { NewLeadWorkspaceEntity } from 'src/modules/new-lead/standard-objects/new-lead.workspace-entity';
 import { NoteWorkspaceEntity } from 'src/modules/note/standard-objects/note.workspace-entity';
 import { OpportunityWorkspaceEntity } from 'src/modules/opportunity/standard-objects/opportunity.workspace-entity';
 import { PersonWorkspaceEntity } from 'src/modules/person/standard-objects/person.workspace-entity';
 import { TaskWorkspaceEntity } from 'src/modules/task/standard-objects/task.workspace-entity';
+import { TeamWorkspaceEntity } from 'src/modules/team/standard-objects/team.workspace-entity';
 import { WorkflowRunWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow-run.workspace-entity';
 import { WorkflowVersionWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow-version.workspace-entity';
 import { WorkflowWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow.workspace-entity';
@@ -244,6 +246,38 @@ export class FavoriteWorkspaceEntity extends BaseWorkspaceEntity {
   })
   @WorkspaceIsNullable()
   viewId: string;
+
+  @WorkspaceRelation({
+    standardId: FAVORITE_STANDARD_FIELD_IDS.team,
+    type: RelationType.MANY_TO_ONE,
+    label: msg`Team`,
+    description: msg`Favorite team`,
+    icon: 'IconUsers',
+    inverseSideTarget: () => TeamWorkspaceEntity,
+    inverseSideFieldKey: 'favorites',
+    onDelete: RelationOnDeleteAction.CASCADE,
+  })
+  @WorkspaceIsNullable()
+  team: Relation<TeamWorkspaceEntity> | null;
+
+  @WorkspaceJoinColumn('team')
+  teamId: string;
+
+  @WorkspaceRelation({
+    standardId: FAVORITE_STANDARD_FIELD_IDS.newLead,
+    type: RelationType.MANY_TO_ONE,
+    label: msg`New Lead`,
+    description: msg`Favorite new lead`,
+    icon: 'IconUserPlus',
+    inverseSideTarget: () => NewLeadWorkspaceEntity,
+    inverseSideFieldKey: 'favorites',
+    onDelete: RelationOnDeleteAction.CASCADE,
+  })
+  @WorkspaceIsNullable()
+  newLead: Relation<NewLeadWorkspaceEntity> | null;
+
+  @WorkspaceJoinColumn('newLead')
+  newLeadId: string;
 
   @WorkspaceDynamicRelation({
     type: RelationType.MANY_TO_ONE,

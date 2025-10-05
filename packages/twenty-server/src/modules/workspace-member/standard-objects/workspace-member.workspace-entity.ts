@@ -20,6 +20,7 @@ import { WorkspaceIsNullable } from 'src/engine/twenty-orm/decorators/workspace-
 import { WorkspaceIsSearchable } from 'src/engine/twenty-orm/decorators/workspace-is-searchable.decorator';
 import { WorkspaceIsSystem } from 'src/engine/twenty-orm/decorators/workspace-is-system.decorator';
 import { WorkspaceIsUnique } from 'src/engine/twenty-orm/decorators/workspace-is-unique.decorator';
+import { WorkspaceJoinColumn } from 'src/engine/twenty-orm/decorators/workspace-join-column.decorator';
 import { WorkspaceRelation } from 'src/engine/twenty-orm/decorators/workspace-relation.decorator';
 import { WORKSPACE_MEMBER_STANDARD_FIELD_IDS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-field-ids';
 import { STANDARD_OBJECT_ICONS } from 'src/engine/workspace-manager/workspace-sync-metadata/constants/standard-object-icons';
@@ -35,7 +36,9 @@ import { CompanyWorkspaceEntity } from 'src/modules/company/standard-objects/com
 import { ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
 import { FavoriteWorkspaceEntity } from 'src/modules/favorite/standard-objects/favorite.workspace-entity';
 import { MessageParticipantWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-participant.workspace-entity';
+import { NewLeadWorkspaceEntity } from 'src/modules/new-lead/standard-objects/new-lead.workspace-entity';
 import { TaskWorkspaceEntity } from 'src/modules/task/standard-objects/task.workspace-entity';
+import { TeamWorkspaceEntity } from 'src/modules/team/standard-objects/team.workspace-entity';
 import { TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 
 export enum WorkspaceMemberDateFormatEnum {
@@ -373,6 +376,46 @@ export class WorkspaceMemberWorkspaceEntity extends BaseWorkspaceEntity {
   @WorkspaceIsNullable()
   @WorkspaceIsSystem()
   timelineActivities: Relation<TimelineActivityWorkspaceEntity[]>;
+
+  @WorkspaceRelation({
+    standardId: WORKSPACE_MEMBER_STANDARD_FIELD_IDS.team,
+    type: RelationType.MANY_TO_ONE,
+    label: msg`Team`,
+    description: msg`Team this member belongs to`,
+    icon: 'IconUsers',
+    inverseSideTarget: () => TeamWorkspaceEntity,
+    inverseSideFieldKey: 'employees',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  @WorkspaceIsNullable()
+  team: Relation<TeamWorkspaceEntity> | null;
+
+  @WorkspaceJoinColumn('team')
+  teamId: string | null;
+
+  @WorkspaceRelation({
+    standardId: WORKSPACE_MEMBER_STANDARD_FIELD_IDS.managedTeams,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Managed Teams`,
+    description: msg`Teams managed by this member`,
+    icon: 'IconUsers',
+    inverseSideTarget: () => TeamWorkspaceEntity,
+    inverseSideFieldKey: 'manager',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  managedTeams: Relation<TeamWorkspaceEntity[]>;
+
+  @WorkspaceRelation({
+    standardId: WORKSPACE_MEMBER_STANDARD_FIELD_IDS.leadsToApprove,
+    type: RelationType.ONE_TO_MANY,
+    label: msg`Leads to Approve`,
+    description: msg`Leads this manager needs to approve`,
+    icon: 'IconUserPlus',
+    inverseSideTarget: () => NewLeadWorkspaceEntity,
+    inverseSideFieldKey: 'manager',
+    onDelete: RelationOnDeleteAction.SET_NULL,
+  })
+  leadsToApprove: Relation<NewLeadWorkspaceEntity[]>;
 
   @WorkspaceField({
     standardId: WORKSPACE_MEMBER_STANDARD_FIELD_IDS.searchVector,

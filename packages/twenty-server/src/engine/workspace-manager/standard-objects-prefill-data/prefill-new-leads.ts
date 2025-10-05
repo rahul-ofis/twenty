@@ -1,6 +1,12 @@
 import { type EntityManager } from 'typeorm';
 
 import { FieldActorSource } from 'src/engine/metadata-modules/field-metadata/composite-types/actor.composite-type';
+import {
+  TEAM_ALPHA_ID,
+  TEAM_BETA_ID,
+  TEAM_DELTA_ID,
+  TEAM_GAMMA_ID,
+} from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-teams';
 
 export const prefillNewLeads = async (
   entityManager: EntityManager,
@@ -17,6 +23,7 @@ export const prefillNewLeads = async (
       'companyName',
       'website',
       'stage',
+      'teamId',
       'position',
       'createdBySource',
       'createdByWorkspaceMemberId',
@@ -32,6 +39,7 @@ export const prefillNewLeads = async (
         companyName: 'TechCorp Solutions',
         website: 'https://techcorp.com',
         stage: 'WAITING_FOR_APPROVAL',
+        teamId: TEAM_ALPHA_ID,
         position: 1,
         createdBySource: FieldActorSource.SYSTEM,
         createdByWorkspaceMemberId: null,
@@ -45,6 +53,7 @@ export const prefillNewLeads = async (
         companyName: 'Innovate UK Ltd',
         website: 'https://innovateuk.co.uk',
         stage: 'APPROVED',
+        teamId: TEAM_BETA_ID,
         position: 2,
         createdBySource: FieldActorSource.SYSTEM,
         createdByWorkspaceMemberId: null,
@@ -58,6 +67,7 @@ export const prefillNewLeads = async (
         companyName: 'Dragon Tech Industries',
         website: 'https://dragontech.cn',
         stage: 'APPROVED',
+        teamId: TEAM_GAMMA_ID,
         position: 3,
         createdBySource: FieldActorSource.SYSTEM,
         createdByWorkspaceMemberId: null,
@@ -71,6 +81,7 @@ export const prefillNewLeads = async (
         companyName: 'Iberia Digital',
         website: 'https://iberiadigital.es',
         stage: 'UNAPPROVED',
+        teamId: TEAM_DELTA_ID,
         position: 4,
         createdBySource: FieldActorSource.SYSTEM,
         createdByWorkspaceMemberId: null,
@@ -84,6 +95,7 @@ export const prefillNewLeads = async (
         companyName: 'Mumbai Ventures Pvt Ltd',
         website: 'https://mumbaiventures.in',
         stage: 'APPROVED',
+        teamId: TEAM_ALPHA_ID,
         position: 5,
         createdBySource: FieldActorSource.SYSTEM,
         createdByWorkspaceMemberId: null,

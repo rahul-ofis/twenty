@@ -42,4 +42,5 @@ export const STANDARD_OBJECT_ICONS = {
   workflowAutomatedTrigger: 'IconSettingsAutomation',
   workspaceMember: 'IconUserCircle',
   newLead: 'IconUserPlus',
+  team: 'IconUsers',
 } as const;

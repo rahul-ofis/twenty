@@ -26,6 +26,7 @@ import { peopleAllView } from 'src/engine/workspace-manager/standard-objects-pre
 import { tasksAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/tasks-all.view';
 import { tasksAssignedToMeView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/tasks-assigned-to-me';
 import { tasksByStatusView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/tasks-by-status.view';
+import { teamsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/teams-all.view';
 import { workflowRunsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/workflow-runs-all.view';
 import { workflowVersionsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/workflow-versions-all.view';
 import { workflowsAllView } from 'src/engine/workspace-manager/standard-objects-prefill-data/views/workflows-all.view';
@@ -60,6 +61,7 @@ export const prefillCoreViews = async ({
     workflowVersionsAllView(objectMetadataItems, true),
     workflowRunsAllView(objectMetadataItems, true),
     newLeadsAllView(objectMetadataItems, true),
+    teamsAllView(objectMetadataItems, true),
   ];
 
   if (featureFlags?.[FeatureFlagKey.IS_PAGE_LAYOUT_ENABLED]) {

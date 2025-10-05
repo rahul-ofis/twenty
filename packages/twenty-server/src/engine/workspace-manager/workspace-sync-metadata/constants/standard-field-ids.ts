@@ -217,6 +217,8 @@ export const FAVORITE_STANDARD_FIELD_IDS = {
   custom: '20202020-855a-4bc8-9861-79deef37011f',
   favoriteFolder: '20202020-f658-4d12-8b4d-248356aa4bd9',
   dashboard: '20202020-6ef9-45e4-b440-cc986f687c91',
+  team: '20202020-a1a2-4b3c-9d5e-7f8a9b0c1d2e',
+  newLead: '20202020-b2b3-5c4d-0e6f-8a9b0c1d2e3f',
 } as const;
 
 export const FAVORITE_FOLDER_STANDARD_FIELD_IDS = {
@@ -529,6 +531,9 @@ export const WORKSPACE_MEMBER_STANDARD_FIELD_IDS = {
   searchVector: '20202020-46d0-4e7f-bc26-74c0edaeb619',
   calendarStartDay: '20202020-92d0-1d7f-a126-25ededa6b142',
   numberFormat: '20202020-7f40-4e7f-b126-11c0eda6b141',
+  team: '20202020-a1b2-4c5d-9e8f-1a2b3c4d5e6f',
+  managedTeams: '20202020-b2c3-5d6e-0f9a-2b3c4d5e6f7a',
+  leadsToApprove: '20202020-d4e5-7f8a-2b1c-4d5e6f7a8b9c',
 } as const;
 
 export const CUSTOM_OBJECT_STANDARD_FIELD_IDS = {
@@ -554,6 +559,35 @@ export const DASHBOARD_STANDARD_FIELD_IDS = {
   favorites: '20202020-f032-478f-88fa-6426ff6f1e4c',
   attachments: '20202020-bf6f-4220-8c55-2764f1175870',
   searchVector: '20202020-0bcc-47a4-8360-2e35a7133f7a',
+} as const;
+
+export const TEAM_STANDARD_FIELD_IDS = {
+  name: '20202020-e1f2-4a3b-9c5d-6e7f8a9b0c1d',
+  description: '20202020-f2a3-5b4c-0d6e-7f8a9b0c1d2e',
+  isActive: '20202020-b4c5-7d6e-2f8a-9b0c1d2e3f4a',
+  position: '20202020-c5d6-8e7f-3a9b-0c1d2e3f4a5b',
+  manager: '20202020-d6e7-9f8a-4b0c-1d2e3f4a5b6c',
+  employees: '20202020-e7f8-0a9b-5c1d-2e3f4a5b6c7d',
+  leads: '20202020-f8a9-1b0c-6d2e-3f4a5b6c7d8e',
+  createdBy: '20202020-a9b0-2c1d-7e3f-4a5b6c7d8e9f',
+  favorites: '20202020-b0c1-3d2e-8f4a-5b6c7d8e9f0a',
+  searchVector: '20202020-e3f4-6a5b-1c7d-8e9f0a1b2c3d',
+} as const;
+
+export const NEW_LEAD_STANDARD_FIELD_IDS = {
+  name: '20202020-7240-4ba5-a8e9-a4f3d3a6a99f',
+  phoneNumber: '20202020-7240-4ba5-a8e9-a4f3d3a6a910',
+  email: '20202020-7240-4ba5-a8e9-a4f3d3a6a911',
+  country: '20202020-7240-4ba5-a8e9-a4f3d3a6a912',
+  companyName: '20202020-7240-4ba5-a8e9-a4f3d3a6a913',
+  website: '20202020-7240-4ba5-a8e9-a4f3d3a6a914',
+  stage: '20202020-7240-4ba5-a8e9-a4f3d3a6a917',
+  position: '20202020-7240-4ba5-a8e9-a4f3d3a6a915',
+  createdBy: '20202020-7240-4ba5-a8e9-a4f3d3a6a916',
+  team: '20202020-7240-4ba5-a8e9-a4f3d3a6a918',
+  manager: '20202020-7240-4ba5-a8e9-a4f3d3a6a919',
+  favorites: '20202020-7240-4ba5-a8e9-a4f3d3a6a920',
+  searchVector: '20202020-7240-4ba5-a8e9-a4f3d3a6a923',
 } as const;
 
 export const STANDARD_OBJECT_FIELD_IDS = {
@@ -596,16 +630,6 @@ export const STANDARD_OBJECT_FIELD_IDS = {
   workflowRun: WORKFLOW_RUN_STANDARD_FIELD_IDS,
   workflowVersion: WORKFLOW_VERSION_STANDARD_FIELD_IDS,
   workspaceMember: WORKSPACE_MEMBER_STANDARD_FIELD_IDS,
+  team: TEAM_STANDARD_FIELD_IDS,
+  newLead: NEW_LEAD_STANDARD_FIELD_IDS,
 } as const;
-
-export const NEW_LEAD_STANDARD_FIELD_IDS = {
-  name: '20202020-7240-4ba5-a8e9-a4f3d3a6a99f',
-  phoneNumber: '20202020-7240-4ba5-a8e9-a4f3d3a6a910',
-  email: '20202020-7240-4ba5-a8e9-a4f3d3a6a911',
-  country: '20202020-7240-4ba5-a8e9-a4f3d3a6a912',
-  companyName: '20202020-7240-4ba5-a8e9-a4f3d3a6a913',
-  website: '20202020-7240-4ba5-a8e9-a4f3d3a6a914',
-  stage: '20202020-7240-4ba5-a8e9-a4f3d3a6a917',
-  position: '20202020-7240-4ba5-a8e9-a4f3d3a6a915',
-  createdBy: '20202020-7240-4ba5-a8e9-a4f3d3a6a916',
-};

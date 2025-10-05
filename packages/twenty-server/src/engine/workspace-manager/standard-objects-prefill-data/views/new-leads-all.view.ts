@@ -32,6 +32,7 @@ export const newLeadsAllView = (
     kanbanFieldMetadataId: '',
     filters: [],
     fields: [
+      // Primary identifiers and company
       {
         fieldMetadataId:
           newLeadObjectMetadata.fields.find(
@@ -44,9 +45,21 @@ export const newLeadsAllView = (
       {
         fieldMetadataId:
           newLeadObjectMetadata.fields.find(
-            (field) => field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.email,
+            (field) =>
+              field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.companyName,
           )?.id ?? '',
         position: 1,
+        isVisible: true,
+        size: 180,
+      },
+
+      // Contact info
+      {
+        fieldMetadataId:
+          newLeadObjectMetadata.fields.find(
+            (field) => field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.email,
+          )?.id ?? '',
+        position: 2,
         isVisible: true,
         size: 200,
         aggregateOperation: AggregateOperations.COUNT,
@@ -57,19 +70,9 @@ export const newLeadsAllView = (
             (field) =>
               field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.phoneNumber,
           )?.id ?? '',
-        position: 2,
-        isVisible: true,
-        size: 150,
-      },
-      {
-        fieldMetadataId:
-          newLeadObjectMetadata.fields.find(
-            (field) =>
-              field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.companyName,
-          )?.id ?? '',
         position: 3,
         isVisible: true,
-        size: 180,
+        size: 150,
       },
       {
         fieldMetadataId:
@@ -90,13 +93,63 @@ export const newLeadsAllView = (
         size: 170,
         aggregateOperation: AggregateOperations.PERCENTAGE_EMPTY,
       },
+
+      // Lead status and ownership
+      {
+        fieldMetadataId:
+          newLeadObjectMetadata.fields.find(
+            (field) => field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.stage,
+          )?.id ?? '',
+        position: 6,
+        isVisible: true,
+        size: 120,
+      },
+      {
+        fieldMetadataId:
+          newLeadObjectMetadata.fields.find(
+            (field) => field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.team,
+          )?.id ?? '',
+        position: 7,
+        isVisible: true,
+        size: 150,
+      },
+      {
+        fieldMetadataId:
+          newLeadObjectMetadata.fields.find(
+            (field) => field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.manager,
+          )?.id ?? '',
+        position: 8,
+        isVisible: true,
+        size: 150,
+      },
+
+      // Audit info
+      {
+        fieldMetadataId:
+          newLeadObjectMetadata.fields.find(
+            (field) => field.standardId === NEW_LEAD_STANDARD_FIELD_IDS.createdBy,
+          )?.id ?? '',
+        position: 9,
+        isVisible: true,
+        size: 180,
+      },
       {
         fieldMetadataId:
           newLeadObjectMetadata.fields.find(
             (field) =>
               field.standardId === BASE_OBJECT_STANDARD_FIELD_IDS.createdAt,
           )?.id ?? '',
-        position: 6,
+        position: 10,
+        isVisible: true,
+        size: 150,
+      },
+      {
+        fieldMetadataId:
+          newLeadObjectMetadata.fields.find(
+            (field) =>
+              field.standardId === BASE_OBJECT_STANDARD_FIELD_IDS.updatedAt,
+          )?.id ?? '',
+        position: 11,
         isVisible: true,
         size: 150,
       },

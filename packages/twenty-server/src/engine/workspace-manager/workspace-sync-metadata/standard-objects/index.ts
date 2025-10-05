@@ -22,6 +22,7 @@ import { OpportunityWorkspaceEntity } from 'src/modules/opportunity/standard-obj
 import { PersonWorkspaceEntity } from 'src/modules/person/standard-objects/person.workspace-entity';
 import { TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { TaskWorkspaceEntity } from 'src/modules/task/standard-objects/task.workspace-entity';
+import { TeamWorkspaceEntity } from 'src/modules/team/standard-objects/team.workspace-entity';
 import { TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 import { ViewFieldWorkspaceEntity } from 'src/modules/view/standard-objects/view-field.workspace-entity';
 import { ViewFilterGroupWorkspaceEntity } from 'src/modules/view/standard-objects/view-filter-group.workspace-entity';
@@ -72,5 +73,6 @@ export const standardObjectMetadataDefinitions = [
   PersonWorkspaceEntity,
   TaskWorkspaceEntity,
   TaskTargetWorkspaceEntity,
+  TeamWorkspaceEntity,
   NewLeadWorkspaceEntity,
 ];

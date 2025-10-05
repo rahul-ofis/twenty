@@ -5,6 +5,7 @@ import { shouldSeedWorkspaceFavorite } from 'src/engine/utils/should-seed-worksp
 import { prefillCompanies } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-companies';
 import { prefillNewLeads } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-new-leads';
 import { prefillPeople } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-people';
+import { prefillTeams } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-teams';
 import { prefillViews } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-views';
 import { prefillWorkflows } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-workflows';
 import { prefillWorkspaceFavorites } from 'src/engine/workspace-manager/standard-objects-prefill-data/prefill-workspace-favorites';
@@ -19,6 +20,8 @@ export const standardObjectsPrefillData = async (
     await prefillCompanies(entityManager, schemaName);
 
     await prefillPeople(entityManager, schemaName);
+
+    await prefillTeams(entityManager, schemaName);
 
     await prefillNewLeads(entityManager, schemaName);
 
