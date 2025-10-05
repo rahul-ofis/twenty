@@ -23,7 +23,15 @@ export const EMPLOYEE_ROLE: StandardRoleDefinition = {
     PermissionFlagType.IMPORT_CSV,
     PermissionFlagType.EXPORT_CSV,
   ],
-  objectPermissions: [], // No object-specific permissions needed - global permissions cover everything
+  objectPermissions: [
+    {
+      objectStandardId: STANDARD_OBJECT_IDS.team,
+      canReadObjectRecords: true,
+      canUpdateObjectRecords: false,
+      canSoftDeleteObjectRecords: false,
+      canDestroyObjectRecords: false,
+    },
+  ], // Restrict team modifications while allowing read access
   fieldPermissions: [
     {
       objectStandardId: STANDARD_OBJECT_IDS.newLead,
