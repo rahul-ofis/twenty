@@ -11,6 +11,7 @@ import styled from '@emotion/styled';
 import { t } from '@lingui/core/macro';
 import { isDefined } from 'twenty-shared/utils';
 import { useIcons } from 'twenty-ui/display';
+import { RecordIndexAddRecordButton } from './RecordIndexAddRecordButton';
 
 const StyledTitleWithSelectedRecords = styled.div`
   display: flex;
@@ -68,6 +69,7 @@ export const RecordIndexPageHeader = () => {
     <PageHeader title={pageHeaderTitle} Icon={Icon}>
       {isDefined(contextStoreCurrentViewId) && (
         <>
+          <RecordIndexAddRecordButton />
           <RecordIndexActionMenu />
           <PageHeaderToggleCommandMenuButton />
         </>

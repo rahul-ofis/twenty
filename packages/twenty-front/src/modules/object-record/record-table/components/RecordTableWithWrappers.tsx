@@ -11,6 +11,8 @@ import { PageFocusId } from '@/types/PageFocusId';
 import { useHotkeysOnFocusedElement } from '@/ui/utilities/hotkey/hooks/useHotkeysOnFocusedElement';
 import { ScrollWrapper } from '@/ui/utilities/scroll/components/ScrollWrapper';
 import { RecordUpdateContext } from '../contexts/EntityUpdateMutationHookContext';
+import { useRecordCreateFormModal } from '../hooks/useRecordCreateFormModal';
+import { RecordCreateFormModal } from './RecordCreateFormModal';
 
 type RecordTableWithWrappersProps = {
   objectNameSingular: string;
@@ -52,6 +54,8 @@ export const RecordTableWithWrappers = ({
   };
 
   const { deleteOneRecord } = useDeleteOneRecord({ objectNameSingular });
+  const { closeRecordCreateFormModal, recordCreateFormModalId } =
+    useRecordCreateFormModal();
 
   return (
     <RecordTableComponentInstance recordTableId={recordTableId}>
@@ -70,6 +74,10 @@ export const RecordTableWithWrappers = ({
             </RecordUpdateContext.Provider>
           </ScrollWrapper>
         </EntityDeleteContext.Provider>
+        <RecordCreateFormModal
+          modalId={recordCreateFormModalId}
+          onClose={closeRecordCreateFormModal}
+        />
       </RecordTableContextProvider>
     </RecordTableComponentInstance>
   );

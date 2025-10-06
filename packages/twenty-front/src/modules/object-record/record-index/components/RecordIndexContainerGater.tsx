@@ -13,6 +13,7 @@ import { RecordIndexPageHeader } from '@/object-record/record-index/components/R
 import { useHandleIndexIdentifierClick } from '@/object-record/record-index/hooks/useHandleIndexIdentifierClick';
 import { useRecordIndexFieldMetadataDerivedStates } from '@/object-record/record-index/hooks/useRecordIndexFieldMetadataDerivedStates';
 import { useRecordIndexIdFromCurrentContextStore } from '@/object-record/record-index/hooks/useRecordIndexIdFromCurrentContextStore';
+import { useRecordCreateFormModal } from '@/object-record/record-table/hooks/useRecordCreateFormModal';
 import { PageBody } from '@/ui/layout/page/components/PageBody';
 import { RECORD_INDEX_DRAG_SELECT_BOUNDARY_CLASS } from '@/ui/utilities/drag-select/constants/RecordIndecDragSelectBoundaryClass';
 import { PageTitle } from '@/ui/utilities/page-title/components/PageTitle';
@@ -20,6 +21,7 @@ import { ViewComponentInstanceContext } from '@/views/states/contexts/ViewCompon
 import styled from '@emotion/styled';
 import { useRecoilCallback } from 'recoil';
 import { NotFound } from '~/pages/not-found/NotFound';
+import { RecordIndexCreateFormModal } from './RecordIndexCreateFormModal';
 
 const StyledIndexContainer = styled.div`
   display: flex;
@@ -30,6 +32,9 @@ const StyledIndexContainer = styled.div`
 export const RecordIndexContainerGater = () => {
   const { recordIndexId, objectMetadataItem } =
     useRecordIndexIdFromCurrentContextStore();
+
+  const { closeRecordCreateFormModal, recordCreateFormModalId } =
+    useRecordCreateFormModal();
 
   const handleIndexRecordsLoaded = useRecoilCallback(
     ({ set }) =>
@@ -110,6 +115,10 @@ export const RecordIndexContainerGater = () => {
           </RecordComponentInstanceContextsWrapper>
           <RecordIndexLoadBaseOnContextStoreEffect />
         </ViewComponentInstanceContext.Provider>
+        <RecordIndexCreateFormModal
+          modalId={recordCreateFormModalId}
+          onClose={closeRecordCreateFormModal}
+        />
       </RecordIndexContextProvider>
     </>
   );
