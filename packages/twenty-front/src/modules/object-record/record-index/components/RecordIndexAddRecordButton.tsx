@@ -1,7 +1,7 @@
 import { useObjectPermissions } from '@/object-record/hooks/useObjectPermissions';
 import { isObjectMetadataReadOnly } from '@/object-record/read-only/utils/isObjectMetadataReadOnly';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
-import { useRecordCreateFormModal } from '@/object-record/record-table/hooks/useRecordCreateFormModal';
+import { useRecordInput } from '@/object-record/record-input/hooks/useRecordInput';
 import styled from '@emotion/styled';
 import { IconPlus } from 'twenty-ui/display';
 import { Button } from 'twenty-ui/input';
@@ -16,13 +16,15 @@ export const RecordIndexAddRecordButton = () => {
   const { objectPermissionsByObjectMetadataId } = useObjectPermissions();
 
   const isMobile = useIsMobile();
-  const { openRecordCreateFormModal } = useRecordCreateFormModal();
+  const { openRecordInput } = useRecordInput();
 
   const objectPermissions =
     objectPermissionsByObjectMetadataId[objectMetadataItem.id];
 
   const handleAddRecordClick = () => {
-    openRecordCreateFormModal();
+    openRecordInput({
+      objectNameSingular: objectMetadataItem.nameSingular,
+    });
   };
 
   const isReadOnly = isObjectMetadataReadOnly({

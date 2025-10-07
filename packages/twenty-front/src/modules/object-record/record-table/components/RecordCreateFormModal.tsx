@@ -3,15 +3,19 @@ import { useRecoilValue } from 'recoil';
 import { v4 } from 'uuid';
 
 import { useOpenRecordInCommandMenu } from '@/command-menu/hooks/useOpenRecordInCommandMenu';
-import { formatFieldMetadataItemAsFieldDefinition } from '@/object-metadata/utils/formatFieldMetadataItemAsFieldDefinition';
+import { formatFieldMetadataItemAsColumnDefinition } from '@/object-metadata/utils/formatFieldMetadataItemAsColumnDefinition';
 import { useCreateOneRecord } from '@/object-record/hooks/useCreateOneRecord';
 import { FormFieldInput } from '@/object-record/record-field/ui/components/FormFieldInput';
+import { FieldContext } from '@/object-record/record-field/ui/contexts/FieldContext';
+import { RecordFieldComponentInstanceContext } from '@/object-record/record-field/ui/states/contexts/RecordFieldComponentInstanceContext';
 import { isFieldRelation } from '@/object-record/record-field/ui/types/guards/isFieldRelation';
 import { recordIndexOpenRecordInState } from '@/object-record/record-index/states/recordIndexOpenRecordInState';
+import { PropertyBox } from '@/object-record/record-inline-cell/property-box/components/PropertyBox';
 import { useRecordTableContextOrThrow } from '@/object-record/record-table/contexts/RecordTableContext';
 import { useBuildRecordInputFromFilters } from '@/object-record/record-table/hooks/useBuildRecordInputFromFilters';
 import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
 import { canOpenObjectInSidePanel } from '@/object-record/utils/canOpenObjectInSidePanel';
+import { getRecordFieldInputInstanceId } from '@/object-record/utils/getRecordFieldInputId';
 import { Modal } from '@/ui/layout/modal/components/Modal';
 import { ViewOpenRecordInType } from '@/views/types/ViewOpenRecordInType';
 import styled from '@emotion/styled';
@@ -22,29 +26,40 @@ import { type JsonValue } from 'type-fest';
 import { useNavigateApp } from '~/hooks/useNavigateApp';
 
 const StyledModalContent = styled(Modal.Content)`
-  max-height: 70vh;
-  overflow-y: auto;
-  padding: ${({ theme }) => theme.spacing(6)};
-`;
-
-const StyledFormContainer = styled.div`
+  padding: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(4)};
+  height: 100%;
 `;
 
-const StyledButtonContainer = styled.div`
+const StyledModalHeader = styled(Modal.Header)`
+  border-bottom: 1px solid ${({ theme }) => theme.border.color.medium};
+  padding: ${({ theme }) => theme.spacing(4)} ${({ theme }) => theme.spacing(6)};
   display: flex;
-  justify-content: flex-end;
-  gap: ${({ theme }) => theme.spacing(2)};
-  margin-top: ${({ theme }) => theme.spacing(4)};
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledTitle = styled.h2`
   color: ${({ theme }) => theme.font.color.primary};
-  font-size: ${({ theme }) => theme.font.size.lg};
+  font-size: ${({ theme }) => theme.font.size.xl};
   font-weight: ${({ theme }) => theme.font.weight.semiBold};
-  margin: 0 0 ${({ theme }) => theme.spacing(4)} 0;
+  margin: 0;
+`;
+
+const StyledHeaderActions = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(2)};
+`;
+
+const StyledFormContainer = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  background: ${({ theme }) => theme.background.primary};
+  max-width: 400px;
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.spacing(6)};
 `;
 
 type RecordCreateFormModalProps = {
@@ -75,11 +90,17 @@ export const RecordCreateFormModal = ({
   const { openRecordInCommandMenu } = useOpenRecordInCommandMenu();
   const navigate = useNavigateApp();
 
-  // Get visible fields (excluding relations for now to keep it simple)
+  // Get visible fields (excluding relations and system fields)
   const visibleFields = objectMetadataItem.fields
     .filter((field) => !field.isSystem && !isFieldRelation(field))
-    .map((field) =>
-      formatFieldMetadataItemAsFieldDefinition({ field, objectMetadataItem }),
+    .map((field, index) =>
+      formatFieldMetadataItemAsColumnDefinition({
+        field,
+        position: index,
+        objectMetadataItem,
+        showLabel: true,
+        labelWidth: 90,
+      }),
     );
 
   const handleFieldChange = (fieldName: string, value: JsonValue) => {
@@ -132,40 +153,75 @@ export const RecordCreateFormModal = ({
     onClose();
   };
 
+  const instanceId = `create-form-${modalId}`;
+
   return (
-    <Modal modalId={modalId} size="medium">
+    <Modal modalId={modalId} size="medium" padding="none">
       <StyledModalContent>
-        <StyledTitle>Create {objectMetadataItem.labelSingular}</StyledTitle>
+        <StyledModalHeader>
+          <StyledTitle>New {objectMetadataItem.labelSingular}</StyledTitle>
+          <StyledHeaderActions>
+            <Button
+              title="Cancel"
+              variant="secondary"
+              onClick={handleCancel}
+              Icon={IconX}
+              disabled={isSubmitting}
+            />
+            <Button
+              title={isSubmitting ? 'Creating...' : 'Create Record'}
+              variant="primary"
+              onClick={handleSave}
+              Icon={IconDeviceFloppy}
+              disabled={isSubmitting}
+            />
+          </StyledHeaderActions>
+        </StyledModalHeader>
 
         <StyledFormContainer>
-          {visibleFields.map((field) => (
-            <FormFieldInput
-              key={field.metadata.fieldName}
-              field={field}
-              defaultValue={formData[field.metadata.fieldName]}
-              onChange={(value) =>
-                handleFieldChange(field.metadata.fieldName, value)
-              }
-            />
-          ))}
+          <PropertyBox>
+            {visibleFields.map((fieldDefinition) => (
+              <FieldContext.Provider
+                key={fieldDefinition.metadata.fieldName}
+                value={{
+                  recordId: 'new-record',
+                  maxWidth: 200,
+                  isLabelIdentifier: false,
+                  fieldDefinition,
+                  useUpdateRecord: () => [
+                    () => {},
+                    { loading: false },
+                  ],
+                  isDisplayModeFixHeight: true,
+                  isRecordFieldReadOnly: false,
+                  anchorId: `${getRecordFieldInputInstanceId({
+                    recordId: 'new-record',
+                    fieldName: fieldDefinition.metadata.fieldName,
+                    prefix: instanceId,
+                  })}`,
+                }}
+              >
+                <RecordFieldComponentInstanceContext.Provider
+                  value={{
+                    instanceId: getRecordFieldInputInstanceId({
+                      recordId: 'new-record',
+                      fieldName: fieldDefinition.metadata.fieldName,
+                      prefix: instanceId,
+                    }),
+                  }}
+                >
+                  <FormFieldInput
+                    field={fieldDefinition}
+                    defaultValue={formData[fieldDefinition.metadata.fieldName]}
+                    onChange={(value) =>
+                      handleFieldChange(fieldDefinition.metadata.fieldName, value)
+                    }
+                  />
+                </RecordFieldComponentInstanceContext.Provider>
+              </FieldContext.Provider>
+            ))}
+          </PropertyBox>
         </StyledFormContainer>
-
-        <StyledButtonContainer>
-          <Button
-            title="Cancel"
-            variant="secondary"
-            onClick={handleCancel}
-            Icon={IconX}
-            disabled={isSubmitting}
-          />
-          <Button
-            title={isSubmitting ? 'Creating...' : 'Create Record'}
-            variant="primary"
-            onClick={handleSave}
-            Icon={IconDeviceFloppy}
-            disabled={isSubmitting}
-          />
-        </StyledButtonContainer>
       </StyledModalContent>
     </Modal>
   );
